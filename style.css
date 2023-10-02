@@ -1,0 +1,42 @@
+body {
+    background-color: #f7f7f7;
+    color: #0b303b;
+    font-family: montserrat;
+}
+
+/* Top banner including nav bar */
+
+#home {
+    margin-top: -1cm;
+    margin-left: -1cm;
+    margin-right: -1cm;
+    padding-top: 1cm;
+    padding-bottom: 1cm;
+}
+
+/* Application name inside home section */
+
+header {
+    font-size: 30px;
+    color: #0b303b;
+    float: left;
+    padding-left: 2cm;
+}
+
+/* Navigation bar container */
+
+topdiv {
+    float: right;
+    padding-right: 1cm;
+}
+
+/* Above the fold banner */
+
+topbanner {
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    margin-left: 2cm;
+    font-size: 30px;
+    font-weight: bold;
+}
