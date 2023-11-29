@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Device Recognition</title>
+    <link rel="stylesheet" href="static/styles.css" />
+    <script>
+      // Update the label text with the selected file name
+      function updateFileName(labelId, fileInputId) {
+        var fileInput = document.getElementById(fileInputId);
+        var label = document.getElementById(labelId);
+        if (fileInput.files.length > 0) {
+          label.textContent = fileInput.files[0].name;
+        } else {
+          label.textContent = "No file chosen";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <main>
+      <div class="header">
+        <img src="static/logo.png" alt="Logo" class="logo" />
+        <h1>Device Recognition</h1>
+      </div>
+      <div class="content-box">
+        {% if not device %}
+        <h1>Upload an image of your device</h1>
+
+        <!-- Image upload form should always be visible initially -->
+        <form action="/upload" method="post" enctype="multipart/form-data">
+          <input
+            type="file"
+            name="file"
+            id="image_file"
+            class="custom-file-input"
+            accept="image/*"
+            onchange="updateFileName('image-file-name', 'image_file')"
+          />
+          <label for="image_file" class="file-name" id="image-file-name"
+            >No file chosen</label
+          >
+          <button type="submit" class="upload-btn">Upload Image</button>
+        </form>
+        {% endif %}
+
+        <!-- Show CSV upload form only if a device is recognized -->
+        {% if device %}
+        <h2>Device recognised as: {{ device }}</h2>
+        {% if barcode %}
+        <h2>Product code: {{ barcode }}</h2>
+        {% endif %}
+        <p>
+          Insert product code
+          <a
+            href="https://www.dell.com/support/home/en-uk?app=products"
+            target="_blank"
+          >
+            here</a
+          >
+          to generate csv file
+        </p>
+        <h1>Upload csv file</h1>
+        <form
+          action="/upload-specs"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <input
+            type="file"
+            name="specs_csv"
+            id="specs_csv_file"
+            class="custom-file-input"
+            accept=".csv"
+            onchange="updateFileName('specs-csv-file-name', 'specs_csv_file')"
+          />
+          <label for="specs_csv_file" class="file-name" id="specs-csv-file-name"
+            >No file chosen</label
+          >
+          <button type="submit" class="upload-btn">Upload CSV</button>
+        </form>
+        {% endif %}
+
+        <!-- Show price range if available -->
+        {% if min_price and max_price %}
+        <p>Price range for {{ search_string }}:</p>
+        <h2>{{ min_price }} - {{ max_price }}</h2>
+        {% endif %}
+      </div>
+    </main>
+  </body>
+</html>
